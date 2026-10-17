@@ -1,6 +1,6 @@
 # MacroExecute
 
-Version 1.12 adds configurable input timing, text-entry methods, repeatable randomization, image-tolerance interpretation, permission diagnostics and signing-aware exported players. The **`.mexec` workflow file type** remains compatible with existing workflows. See [file-format compatibility](docs/FILE-FORMAT.md). The project remains privately licensed pending a release/license decision.
+Version 1.12 adds configurable input timing, text-entry methods, repeatable randomization, image-tolerance interpretation, permission diagnostics and signing-aware exported players. The **`.mexec` workflow file type** remains compatible with existing workflows. See [file-format compatibility](docs/FILE-FORMAT.md). MacroExecute is open source under the [MIT license](LICENSE).
 
 A local Windows macro workbench with an original interface, source implementation and workflow format. Record a task, refine its steps, and replay it with visible control flow.
 
@@ -17,7 +17,7 @@ For the extensive headless regression/stress suite, build first, then run `npm c
 
 If the executable is already running, use `./build.ps1 -Test -Preview -OutputDirectory bin` to build and test a separate copy without closing your instance.
 
-`build.ps1 -Preview` also renders light/dark previews using hidden controls, without showing windows or sending input. Outputs include `dist/MacroExecute-preview.png`, `dist/workbench-dark.png`, image editors and shortcut editors. The project can be opened with Visual Studio using MacroExecute.csproj. GitHub Actions builds and tests each push and provides an original executable as a private workflow artifact.
+`build.ps1 -Preview` also renders light/dark previews using hidden controls, without showing windows or sending input. Outputs include `dist/MacroExecute-preview.png`, `dist/workbench-dark.png`, image editors and shortcut editors. The project can be opened with Visual Studio using MacroExecute.csproj. GitHub Actions builds and tests each push and provides an original executable as a workflow artifact.
 
 ## Clean generated files
 
@@ -107,7 +107,9 @@ This is a functional reimplementation, not exact feature/file compatibility. Pro
 
 ## Architecture and rights
 
-See [architecture](docs/ARCHITECTURE.md) for implementation details and [LICENSE](LICENSE) for the current rights notice. Public source availability does not itself grant a license to use or redistribute the application.
+MacroExecute is licensed under the [MIT license](LICENSE). You may use, modify, distribute and sell copies, including modified versions, provided you retain the copyright and license notice. This covers the project source, original assets, documentation and examples unless otherwise noted. Include the license when redistributing the application or exported players that contain its runtime. Windows, .NET and development dependencies retain their own licenses.
+
+Contributions are welcome through issues and pull requests. Contributions submitted for inclusion should be provided under the same MIT license. See [architecture](docs/ARCHITECTURE.md) and [headless testing instructions](docs/TESTING.md) to get started.
 
 Public platform references: Microsoft's [SetWindowsHookEx documentation](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowshookexw), [SendInput documentation](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendinput), and [Task Scheduler scripting objects](https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-scripting-objects).
 
