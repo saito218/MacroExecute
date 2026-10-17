@@ -1,0 +1,50 @@
+{
+  "SchemaVersion": 1,
+  "Name": "Nested image IF example",
+  "Steps": [
+    {
+      "Kind": 23,
+      "ImageData": "iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABnSURBVEhL7c1LDoAgDEXR7sRduUHDOnHgyFd+woOk0jR3QlqOHOcVVyb4MDsH6b3AGKQYHvfkoIPPJ4nBHRqIUA0dAhFIjboxA+LHuaGBrai6MQXWUNylgDkUd6jglzYDV+Qgvf+DNxpoqlUJEuX8AAAAAElFTkSuQmCC",
+      "SearchIn": 2,
+      "MoveToMatch": false
+    },
+    {
+      "Kind": 0,
+      "Text": "Outer image found: insert actions after this row."
+    },
+    {
+      "Kind": 23,
+      "ImageData": "iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABnSURBVEhL7c1LDoAgDEXR7sRduUHDOnHgyFd+woOk0jR3QlqOHOcVVyb4MDsH6b3AGKQYHvfkoIPPJ4nBHRqIUA0dAhFIjboxA+LHuaGBrai6MQXWUNylgDkUd6jglzYDV+Qgvf+DNxpoqlUJEuX8AAAAAElFTkSuQmCC",
+      "SearchIn": 1,
+      "MoveToMatch": false
+    },
+    {
+      "Kind": 0,
+      "Text": "Both images found. More IF blocks can be nested here."
+    },
+    {
+      "Kind": 26
+    },
+    {
+      "Kind": 0,
+      "Text": "Inner image missing."
+    },
+    {
+      "Kind": 27
+    },
+    {
+      "Kind": 0,
+      "Text": "Outer image result is available again after the inner END IF."
+    },
+    {
+      "Kind": 26
+    },
+    {
+      "Kind": 0,
+      "Text": "Outer image missing."
+    },
+    {
+      "Kind": 27
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+using System;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using System.Windows.Forms;
+namespace MacroExecute
+{
+    internal static class DesignUpgradeTests
+    {
+        private static IEnumerable<Control> All(Control root){foreach(Control c in root.Controls){yield return c;foreach(var child in All(c))yield return child;}}
+        private static void Check(bool value,string message){if(!value)throw new Exception(message);}
+        private static void Click(Control c){typeof(Control).GetMethod("OnClick",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(c,new object[]{EventArgs.Empty});}
+        private static int Right(Control c){int x=c.Width;for(;!(c is Form);c=c.Parent)x+=c.Left;return x;}
+        public static void Run(Action<string,Action> test,string directory)
+        {
+            test("Clipboard add menu offers AND and GROUP OR without redundant OR rows",delegate{using(var b=new ClipboardRuleBuilder("a")){var menu=b.GetAddMenu();Check(menu.Items.Count==2&&menu.Items[0].Text.Contains("AND")&&menu.Items[1].Text.Contains("GROUP OR"),"Redundant OR option remains");menu.Items[0].PerformClick();All(b).OfType<TextBox>().Last().Text="b";Check(b.Expression=="a\nAND\nb","AND menu does not add a requirement");}});
+            test("Saved OR rows merge quoted and bare alternatives while preserving per-group reuse",delegate{using(var b=new ClipboardRuleBuilder("one\nOR\n\"two words\"\nAND\none\nGROUP OR\nx\nOR\ny",new[]{0})){Check(All(b).OfType<TextBox>().Count()==3&&b.Expression=="one \"two words\"\nAND\none\nGROUP OR\nx y","OR rows not normalized");Check(b.ReuseGroups.SequenceEqual(new[]{0}),"Merged rows lost reuse group");}});
+            test("Theme gallery previews every palette without mutating active preferences",delegate{string old=UiTheme.Style;bool dark=UiTheme.Dark;using(var f=new PreferencesForm(new Preferences{AccentStyle="Aftershock",DarkMode=true})){f.Size=f.MinimumSize;HeadlessUi.Render(f,Path.Combine(directory,"new-theme-gallery.png"));var choices=All(f).OfType<PaletteButton>().ToArray();Check(choices.Length==6,"New palettes missing");foreach(var button in choices){Check(button.Right<=button.Parent.ClientSize.Width&&button.Bottom<=button.Parent.ClientSize.Height,"Palette clipped in gallery");Click(button);var preview=All(f).OfType<ThemePreview>().Single();Check(preview.Palette==button.Palette&&UiTheme.Style==old&&UiTheme.Dark==dark,"Preview mutated active appearance");}Check(!f.Visible,"Theme gallery shown");}});
+            test("Repeat guided editor exposes count random maximum and until-stop without advanced fields",delegate{using(var f=new StepEditor(new Step{Kind=ActionKind.Repeat,Count=4,CountMax=7},directory)){HeadlessUi.Render(f,Path.Combine(directory,"repeat-guided.png"));Check(All(f).OfType<NumericUpDown>().Count()==2,"Repeat controls missing");All(f).OfType<CheckBox>().Single(c=>c.Text=="Repeat until stopped or Break").Checked=true;Click(All(f).OfType<Button>().Single(c=>c.Text=="Save step"));Check(f.Value.Count==0&&f.Value.CountMax==0,"Until-stop did not clear random bounds");}});
+            test("Switching advanced fields disposes retired controls and retains the image preview",delegate{using(var f=new StepEditor(Samples.Nested().Steps[0],directory)){HeadlessUi.Render(f,Path.Combine(directory,"editor-before-advanced.png"));var old=All(f).OfType<ThemeRadioButton>().ToArray();var picture=All(f).OfType<PictureBox>().Single();var tabs=All(f).OfType<ThemeTabs>().Single();tabs.SelectedIndex=1;tabs.SelectedIndex=0;Check(old.All(c=>c.IsDisposed),"Retired configuration controls leaked");Check(!picture.IsDisposed&&picture.Image!=null&&All(f).OfType<PictureBox>().Single()==picture,"Rebuild lost the image preview");HeadlessUi.Render(f,Path.Combine(directory,"editor-after-advanced.png"));Check(!f.Visible,"Advanced switch showed the editor");}});
+            test("All action configurations render compact with guided fields and an accessible Save button",delegate{UiTheme.Style="Aftershock";UiTheme.Dark=true;foreach(ActionKind kind in Enum.GetValues(typeof(ActionKind)))using(var f=new StepEditor(new Step{Kind=kind},directory)){f.Size=f.MinimumSize;HeadlessUi.Render(f,Path.Combine(directory,"guided-"+kind+".png"));Check(!All(f).OfType<Label>().Any(l=>l.Text=="Use Advanced fields to configure this action."),"Missing guided configuration: "+kind);Check(Right(All(f).OfType<Button>().Single(b=>b.Text=="Save step"))<=f.ClientSize.Width,"Save clipped: "+kind);if(kind==ActionKind.MouseClick){All(f).OfType<RadioButton>().Single(r=>r.Text=="Current pointer (do not move)").Checked=true;Check(!All(f).OfType<NumericUpDown>().Single(n=>n.AccessibleName=="X / horizontal offset").Enabled,"Unused coordinates still editable");All(f).OfType<RadioButton>().Single(r=>r.Text=="Absolute screen coordinates").Checked=true;Check(All(f).OfType<NumericUpDown>().Single(n=>n.AccessibleName=="X / horizontal offset").Enabled,"Absolute coordinates stayed disabled");}Check(!f.Visible,"Configuration opened a window");}});
+        }
+    }
+}

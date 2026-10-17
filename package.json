@@ -1,0 +1,13 @@
+{
+  "name": "macroexecute-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Headless native engine and hidden WinForms regression tests using Playwright Test as runner",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2"
+  }
+}

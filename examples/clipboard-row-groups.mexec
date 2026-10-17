@@ -1,0 +1,11 @@
+{
+  "SchemaVersion": 1,
+  "Name": "Clipboard rows with AND and alternative groups",
+  "Steps": [
+    {"Kind":24,"ClipboardMatch":4,"Text":"string1 string2 \"string 3\"\nAND\nstring2 \"string 3\" string4\nGROUP OR\nstring4 \"string 5\" string6\nAND\n\"string 5\" string6 string7"},
+    {"Kind":34,"Text":"The clipboard matches a complete group."},
+    {"Kind":26},
+    {"Kind":34,"Text":"No complete group matches. Replace this message or leave ELSE empty to skip."},
+    {"Kind":27}
+  ]
+}

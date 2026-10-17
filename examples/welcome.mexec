@@ -1,0 +1,1 @@
+{"SchemaVersion":1,"Name":"Welcome flow","Steps":[{"Kind":0,"Text":"Open Notepad yourself before playing this example."},{"Kind":16,"Text":"Notepad"},{"Kind":1,"DelayMs":500},{"Kind":28,"Count":3},{"Kind":10,"Text":"Hello from MacroExecute!\n"},{"Kind":1,"DelayMs":250},{"Kind":29}]}

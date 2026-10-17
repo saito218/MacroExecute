@@ -1,0 +1,49 @@
+name: Build and test Windows
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Compile and run headless tests and UI renders
+        shell: pwsh
+        run: ./build.ps1 -Test -Preview
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install pinned Playwright Test runner (no browsers)
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Run native stress and regression scenarios through Playwright Test
+        run: npm test
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: MacroExecute-Windows
+          path: |
+            dist/MacroExecute.exe
+            dist/test-results.txt
+            dist/last-error.txt
+            dist/workbench-*.png
+            dist/image-editor-*.png
+            dist/shortcuts-*.png
+            dist/palette-*.png
+            dist/preferences-*.png
+            dist/schedule-*.png
+            dist/workflow-picker-*.png
+            dist/workflow-bindings-*.png
+            dist/keyboard-composer.png
+            dist/timing-editor.png
+            dist/macro-review.png
+            dist/guide-*.png
+            dist/visual-example-*.png
+            dist/launch-*.png
+            dist/clipboard-*.png
+            dist/modified-click.png
+            playwright-report/
+            test-results/

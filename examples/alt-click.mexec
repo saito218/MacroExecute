@@ -1,0 +1,16 @@
+{
+  "SchemaVersion": 1,
+  "Name": "Alt-click at the current mouse position",
+  "Steps": [
+    {
+      "Kind": 8,
+      "Pointer": 1,
+      "Button": 0,
+      "MouseModifiers": 4,
+      "ClickCount": 1,
+      "InputHoldMs": 30,
+      "Text": "",
+      "Target": ""
+    }
+  ]
+}

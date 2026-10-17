@@ -1,0 +1,45 @@
+{
+  "SchemaVersion": 1,
+  "Name": "Copied item check - groups",
+  "Steps": [
+    {
+      "Kind": 0,
+      "Text": "Hover the item before playback, or edit Mouse move to pick its position. The copy action sends Ctrl+C to the foreground app."
+    },
+    {
+      "Kind": 42
+    },
+    {
+      "Kind": 5,
+      "Pointer": 1
+    },
+    {
+      "Kind": 1,
+      "DelayMs": 250
+    },
+    {
+      "Kind": 47,
+      "ClipboardWaitForChange": true,
+      "TimeoutMs": 5000
+    },
+    {
+      "Kind": 24,
+      "ClipboardMatch": 3,
+      "Text": "Document Type: Status Report\nMonthly Report\nStatus: Approved\n\nDocument Type: Status Report\nMonthly Report\n(Priority: 1)"
+    },
+    {
+      "Kind": 34,
+      "Text": "Item matches. Replace this message with your desired action(s)."
+    },
+    {
+      "Kind": 26
+    },
+    {
+      "Kind": 0,
+      "Text": "No match: skip the action."
+    },
+    {
+      "Kind": 27
+    }
+  ]
+}
