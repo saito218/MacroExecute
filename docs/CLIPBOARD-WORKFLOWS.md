@@ -68,7 +68,7 @@ Headless verification uses synthetic clipboard/keyboard adapters and hidden rend
 
 ![Copy settings](clipboard-copy.png)
 
-![Existing condition displayed without changing its matching mode](clipboard-condition.png)
+![Existing condition displayed without changing its matching mode](clipboard-report-condition.png)
 
 ## Allow the same string in multiple AND rows
 
